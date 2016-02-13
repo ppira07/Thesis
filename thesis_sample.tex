@@ -50,14 +50,16 @@ SNS では、テキストベースのやりとりが常套化しており、さ�
 
  %英語アブストラクト
  \eabstract{Many users are resently using SNS (Social Networking Service).
-In SNS, text-based exchange has been normalized. 
-Furthermore, users who are using communication tools of a chat form exchanging concise and short sentences has been increasing.
-Nevertheless in the exchange of the text-based messages, the non-language information such as a sound and facial expression are inclined to lack.
-Therefore, disagreement of the recognition occationaly occurs among writers and readers of the message.
-This study propose the system which estimates the feeling of sentences, and gives an emoticon to support the feeling of the sentences in the Internet.
-To estimate feeling, divide sentence into a unit of part of speech using emotional words dictionary, calculate feeling score by naivebayes classifier.
-Based on the result of calculated score, gives an emoticon which is suitable to the feeling of sentence by using emoticon dictionary.
-In this study, divide the emoticons into 7 feelings as `happiness', `sadness', `surprized', `anxienty', `expectation', `anger' and `sereneness'.}
+On SNS, text-based exchange has been normaly used. 
+Furthermore, the number of users who are using communication tools for chatting has been increasing.
+In the case they write short sentences, the non-language information as sounds and expressions are lacked.
+Therefore, the messages make the gap of between writers and readers.
+In this study, we propose the system which estimates the emotion of a sentence, and give an emoticon to recivers on the trols.
+To estimate emotion, we divide a sentence into a part of speech with emotional words dictionary, then we calculate feeling score with a naivebayes classifier.
+Based on the result of calculated score, we gives an emoticon which is suitable to the sentence with emoticon dictionary.
+In adittion, we divide the emoticons into 7 feelings as `happiness', `sadness', `surprized', `anxienty', `expectation', `anger' and `sereneness'.}
+We decide the emotion of the tweet sentence.
+Then, we automatically add an emoticon to the sentence.
 
  %アブストラクトページの作成
  \makeabstract
@@ -74,7 +76,7 @@ In this study, divide the emoticons into 7 feelings as `happiness', `sadness', `
  
  %本文
 \section{はじめに}\label{sec:begin}
- 現在、Social Networking Service(SNS)の普及により多くのユーザーがSNSを利用している。
+ 現在、Social Networking Service (SNS) の普及により多くのユーザーがSNSを利用している。
 SNSとは、人と人とのコミュニケーションをインターネットを通してサポートするコミュニティ型の会員制 Web サービスのことである。
 これには、チャットやLINE\raisebox{.5zw}{\scalebox{.5}{\textregistered}}のような書き手がやりとりの速さを求めるサービスや、Twitter\raisebox{.5zw}{\scalebox{.5}{\textregistered}}のような短文でやりとりするサービスがある。
 
@@ -82,38 +84,40 @@ SNSとは、人と人とのコミュニケーションをインターネット�
 例えば、「上司に褒められて嬉しかった」と「後で君に話したいことがある」では、後者の感情を読み取ることが難しい。
 このような文から書き手の感情を取得することができれば、そこからコミュニケーションをとる上で得られる情報は大きい。
 
-テキストから感情を抽出することを、「感情推定」という。
-具体的には、感情推定は、文中に表現されている感情を、自然言語処理により判別することと言える。
-この感情推定はインターネット上の書類を扱うための主要な技術の一つになっている。
+このように、テキストから感情を抽出することを「感情推定」という。
+具体的には、文中に表現されている感情を、自然言語処理により判別することと言える。
+この感情推定は、膨大な量のインターネット上の書類を扱うための主要な技術の一つになっている。
 例えば、レビュー記事から商品・サービスに対する感情を抽出することにより、消費者の感情情報収集・企業の市場調査が可能となる。
-また、テキスト読み上げロボットの表情・ジェスチャー構成へと幅広い応用が考えられる\ibcite{suga}。
+そして、テキスト読み上げロボットの表情・ジェスチャー構成など幅広い応用がある\ibcite{suga}。
 
-この感情推定にはいくつかの手法が存在する。
+感情推定にはいくつかの手法が存在する。
 基本的な手法として挙げられるのは、感情語辞書を使用する方法である。
 この感情語辞書とは、語彙とその語彙が表す感情を記録したものである。
 そこで、この手法では、その感情語辞書を使用して、与えられた文について語彙単位で感情を評価し、その文全体の感情を判定する。
 
 次に挙げられる手法は、感情コーパスを使用する手法である。
-感情コーパスとは、その文がどのような感情を持っているかを付与したコーパスである。
-感情推定に関する研究には、感情コーパスを用いて文単位に感情を抽出する方法や、感情語辞書を用いて品詞単位に感情を推定し、構文・形態素解析を行って感情のスコアを算出する方法がある。
-感情コーパスを使ったものとして、コーパスを学習データに使い、Support Vector Machine (SVM)やナイーブベイズ分類器を使用し、単語の出現頻度から対象文の感情値を出力する研究がある ~\ibcite{yamamoto}。
-また、その感情コーパスの作成には、コーパス内の文章をそれぞれ人手でタグ付けする方法や、あらかじでシソーラスや辞書から感情に関係する語を分類して半自動でコーパスを作る方法 ~\ibcite{matsumoto} がある。
-本研究では、感情コーパスを用いて文単位に感情を抽出する手法を用いる。
+感情コーパスとは、その文がどのような感情を持っているかを付与した文の集まりである。
+この手法では、感情コーパスを学習データに使い、Support Vector Machine (SVM)やナイーブベイズ分類器を使用し、単語の出現頻度から対象文の感情値を出力する ~\ibcite{yamamoto}。
+また、その感情コーパスの作成には、コーパス内の文章をそれぞれ人手でタグ付けする方法や、あらかじめシソーラスや辞書から感情に関係する語を分類して半自動でコーパスを作る方法 ~\ibcite{matsumoto} がある。
 
-感情コーパスを用いた感情推定は、ナイーブベイズ分類器を使用して感情属性をタグ付けされた文に対する感情語の出現頻度を計算することによって行う。
-ナイーブベイズ分類器のモデルには、多項モデルと多変数ベルヌーイモデルがある。
-多項モデルでは文書の各位置でどの単語が起こったかをモデル化しているのに対し、多変数ベルヌーイモデルは各単語が起こったか起こらなかったかをモデル化している。
-そのため、多項モデルはテキスト分類において多変数ベルヌーイモデルより性能が高いことが明らかになっている\ibcite{andrew} \ibcite{suzuki}。
+感情コーパスを用いた感情推定方法には、ナイーブベイズ分類器を使用したものがある。
+そこでは、感情属性がタグ付けされた文より感情語の出現頻度を計算することによって感情推定を行う。
+このナイーブベイズ分類器のモデルには、多項モデルと多変数ベルヌーイモデルがある。
+多項モデルでは文書の各位置でどの単語が出現したかをモデル化しているのに対し、多変数ベルヌーイモデルは各単語が出現の有無のみをモデル化している。
+そのため、テキストの感情推定において、多項モデルは多変数ベルヌーイモデルより性能が高いことが明らかになっている\ibcite{andrew} \ibcite{suzuki}。
 
 ただ一方で、近年では、文末に顔文字を付与して文の感情を表すユーザが多い。
 顔文字を付与することで、インターネット上のコミュニケーションを円滑にすることができる。
-顔文字は、\verb|(^_^)|のように、記号や文字を組み合わせて表情を表現したものである。
-このように正位置で顔を表現することは、主に日本で使用される顔文字の特徴であり、これを東洋式顔文字と呼ぶ。
+顔文字は、「\verb|(^_^)|」のように、記号や文字を組み合わせて表情を表現したものである。
+このように正位置 \footnote{テキストを読むときの文字の横方向} で顔を表現することは、主に日本で使用される顔文字の特徴であり、これを「東洋式顔文字」と呼ぶ。
 顔文字には文の感情を強調、補足できるという利点があるが、顔文字の種類は増大し続けているため、ユーザが文に適切な顔文字をただ1つ選ぶことは難しい。
 この問題に対して、江村らはユーザの入力文から感情を推定し、顔文字を推薦するシステムを提案した\ibcite{emura}。
+しかしながら、この江村らの手法では、入力文の感情推定に多変数ベルヌーイモデルに類似した手法が用いられており、その感情推定が十分であるとは言えない。
 
-
-本研究では、感情コーパスを用いて多項モデルでナイーブベイズ分類を行う。そして、顔文字付き感情語辞書を構築する。構築した辞書をもとに、入力文の感情を推定し、推定した感情に適切な顔文字を推薦することが目的である。
+本研究の目的は、単文化しがちなSNS上のコミュニケーションに対して、感情の受け渡しを補助するために、入力文に対して顔文字を自動的に付与することである。
+よって、感情推定のために、まず感情コーパスを用いて多項モデルでナイーブベイズ分類を行う。
+それにより、顔文字付き感情語辞書を構築する。
+そして、構築した辞書をもとに、入力文の感情をナイーブベイズ分類により推定し、推定した感情に適切な顔文字を推薦する。
 確率付き感情語辞書には、感情語と、その感情属性、感情確率を登録する。
 感情確率とは、文中にある形態素が出現した際に、その文がある感情であると判断される確率である。
 この感情確率の計算には、ナイーブベイズ分類を用いた。
@@ -132,7 +136,7 @@ SNSとは、人と人とのコミュニケーションをインターネット�
 このとき、入力文の感情確率ベクトルと顔文字付き感情確率辞書の感情確率ベクトルのハミング距離をとり、最もハミング距離が小さい顔文字を入力文に付与する。
 ハミング距離が小さければ、より入力文に適切な顔文字であると判断した。
 
-本研究の構成は以下の通りである。
+本論文の構成は以下の通りである。
 \sref{sec:begin} では、本研究の背景及び目的を記述した。\sref{sec:relatedworks} では、本研究を行うにあたって参考にした文献・研究を説明する。
 \sref{sec:def} では、本研究で構築した確率付き感情語辞書と顔文字付き感情確率辞書の定義と、これらを構築する際に使用したナイーブベイズ分類器ついて説明する。
 \sref{sec:experiment}では、精度検証実験の手順とその結果を記述する。
@@ -160,20 +164,22 @@ SNSとは、人と人とのコミュニケーションをインターネット�
 感情を推定する基準となる感情語については、生起事象文型パターン \ibcite{matsu} に基づいた会話文からの感情推定方法で定義されている。
 この感情語とは、単体で感情を表現することが可能な単語である。
 例えば、名詞であれば「楽しみ」や「がっかり」、動詞であれば「驚いた」や「怒る」などである。
-感情語にはこのような感情の種別を表す。
+感情語にはこのような感情の種別を表す感情属性が与えられている。
+
+\begin{comment}
 感情属性のほかに感情属性値と感情パラメータが付与されている。
 この感情属性値とは、単語がその感情属性にどれだけ帰属するかの度合いを表す。
 感情パラメータとは、文中の各要素に付与された感情属性値を感情の種類ごとに合成したものを指す。
 感情パラメータは、$(各感情属性の数) * (文中の格要素数 +1)$ の感情ベクトルで表現する。
+\end{comment}
 
 感情コーパスによる感情抽出の手法には、菅原の研究がある\ibcite{suga}。
 これは、まずコーパスを学習データとして、SVMやナイーブベイズ分類器を使用する。
-そして、感情がタグ付けされた文において単語の出現頻度を算出する。
-これにより対象文の感情を出力する。
+それにより、感情がタグ付けされた文から単語の出現頻度を算出する。
+これにより対象文の感情を出力している。
 
 感情コーパスの作成には、松本らが提案したコーパス内の文章をそれぞれ人手でタグ付けする方法や、シソーラスや辞書から感情に関係する語を分類して半自動でコーパスを作る方法がある。
-また、テキストをuni-gram、bi-gram、tri-gram の三つの分割方法で感情推定し、感情が全て一致した文と感情を感情コーパスに追加することで感情コーパスを半自動的に構築する研究がされている~\ibcite{funane}。
-この研究の結果、構築されたコーパスによる感情推定精度は 72.1 \% であった。
+また、舟根による、テキストをuni-gram、bi-gram、tri-gram の三つの分割方法で感情推定し、感情が全て一致した文と感情を感情コーパスに追加することで感情コーパスを半自動的に構築する研究もある ~\ibcite{funane}。
 
 本研究では、テキストを形態素解析し、それぞれの形態素に感情属性と感情属性値を与えて感情語辞書を作成する。
 この感情語辞書は、舟根による研究で半自動生成されたコーパスを元に作成する。
@@ -228,11 +234,15 @@ SNSとは、人と人とのコミュニケーションをインターネット�
   \subsection{ベイズ推定とは}\label{sec:defbayes}
 ベイズ推定とは、ベイズ確率に基づき観測事象から推定したい事象を確率的に推論する手法である。
 ベイズ推定の基本的な方法論となっているベイズの定理は、18世紀にイギリスの確率論研究家トーマス・ベイズが提案した。
-ベイズ確率は、ベイズの定理を用いて複数の命題の各々のもっともらしさを確率値で表したものである。
-ベイズの定理は統計学に応用され、ベイズ統計学の代表的な方法となっている。
-ベイズ推定には膨大な反復計算が必要となるが、コンピュータの処理性能が向上したことにより、現在は心理学や経済学にも応用されている。
+このベイズ確率は、ベイズの定理を用いて複数の命題の各々のもっともらしさを確率値で表したものと言える。
+このベイズの定理は統計学に応用され、ベイズ統計学の代表的な方法となっている。
 
-ベイズの定理は、以下の等式で表される。
+
+ベイズ推定には膨大な反復計算が必要となる。
+なぜならば、ベイズの定理においては、事前確率を求めるための事象が増える度にその確率値を更新する必要があるからである。
+しかし、コンピュータの処理性能が向上したことにより、現在は心理学や経済学、そしてインターネットの検索やメールフィルタに利用できるようになっている。
+
+そのベイズの定理は、以下の等式で表される。
 
 \[
 P(B|A)=\frac{P(A \cap B)}{P(A)}=\frac{P(A|B)P(B)}{P(A)}
@@ -242,11 +252,11 @@ P(B|A)=\frac{P(A \cap B)}{P(A)}=\frac{P(A|B)P(B)}{P(A)}
 $P(A)$、$P(B)$は事象$A$、$B$が発生する確率である。
 $P(B)$は$P(A)$が起きる前の事象$B$の確率であり、これは事前確率と呼ばれる。
 $P(B|A)$は事象$A$が発生したあとに事象$B$が発生する条件付き確率を表す。これを$B$事後確率と呼ぶ。
-$P(A|B)$は事象$B$が発生したあとの事象$A$が発生する条件付き確率を表す。これは$B$が真の際にデータが得られる尤度を表し、尤度関数と呼ばれる。
+また、$P(A|B)$は事象$B$が発生したあとの事象$A$が発生する条件付き確率を表す。
+%WIP
+これは$B$が真の際にデータが得られる尤度 \footnote{} を表し、尤度関数と呼ばれる。
 $P(A \cap B)$は事象$A$が発生し、事象$B$も発生する確率を表す。
 この式から、事後確率$P(B|A)$は事前確率$P(B)$と尤度$P(A|B)$の積に比例することが分かる。
-
-
 
 \begin{equation}
 P(B|A)=\frac{P(A|B)P(B)}{P(A)}
@@ -255,26 +265,28 @@ P(B|A)=\frac{P(A|B)P(B)}{P(A)}
 において、両辺に$P(A)$を掛けると
 
 \begin{equation}
-P(A) \cdot P(B|A)=P(B) \cdot P(A|B)
+  P(A) \cdot P(B|A)=P(B) \cdot P(A|B) \label{shiki2}
 \end{equation}
 
 となる。
 
-また、全体集合を$U$としたとき、
+また、全体集合を$U$としたとき、各確率$P(A)$、$P(B)$は以下のように書くことができる。
 
 \begin{eqnarray*}
 P(A) = \frac{A}{U}\\
 P(B) = \frac{B}{U}
 \end{eqnarray*}
 
-となる。
+つまり、これは全事象において各目的事象$A$、$B$が現れる確率を表す。
+そこで、以下の条件付き確率を考える。
+ここで出現する条件確率は$P(A|B)$、$P(B|A)$で、その定義により次のようになる。
 
 \begin{eqnarray*}
 P(A|B) & = & \frac{A \cap B}{B}\\
 P(B|A) & = & \frac{B \cap A}{A}
 \end{eqnarray*}
 
-であるから、
+したがって、これを\ref{shiki2}
 
 \begin{eqnarray*}
 P(A) \cdot P(B|A) & = & \frac{A}{U} \cdot \frac{A \cap B}{A}\\
