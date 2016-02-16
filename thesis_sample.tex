@@ -22,7 +22,7 @@
 \author{平野 万由子}     %本人名
 \supervisor{萩原 信吾} %指導教員名
 \fyear{27}             %所属年度
-\submit{28}{1}{31}    %提出和暦，月，日
+\submit{28}{2}{15}    %提出和暦，月，日
 \title{ナイーブベイズ分類を用いた文の感情推定と顔文字自動付与システムの提案} %論文タイトル
 
 
@@ -76,7 +76,7 @@ Then, we automatically add an emoticon to the sentence.
  
  %本文
 \section{はじめに}\label{sec:begin}
- 現在、Social Networking Service (SNS) の普及により多くのユーザーがSNSを利用している。
+現在、SNS (Social Networking Service) の普及により多くのユーザーがSNSを利用している。
 SNSとは、人と人とのコミュニケーションをインターネットを通してサポートするコミュニティ型の会員制 Web サービスのことである。
 これには、チャットやLINE\raisebox{.5zw}{\scalebox{.5}{\textregistered}}のような書き手がやりとりの速さを求めるサービスや、Twitter\raisebox{.5zw}{\scalebox{.5}{\textregistered}}のような短文でやりとりするサービスがある。
 
@@ -242,10 +242,10 @@ P(B|A)=\frac{P(A \cap B)}{P(A)}=\frac{P(A|B)P(B)}{P(A)}
 
 $P(A)$、$P(B)$は事象$A$、$B$が発生する確率である。
 $P(B)$は$P(A)$が起きる前の事象$B$の確率であり、これは事前確率と呼ばれる。
-$P(B|A)$は事象$A$が発生したあとに事象$B$が発生する条件付き確率を表す。これを$B$事後確率と呼ぶ。
+$P(B|A)$は事象$A$が発生したあとに事象$B$が発生する条件付き確率を表す。これを$B$の事後確率と呼ぶ。
 また、$P(A|B)$は事象$B$が発生したあとの事象$A$が発生する条件付き確率を表す。
 %WIP
-これは$B$が真の際にデータが得られる尤度 \footnote{} を表し、尤度関数と呼ばれる。
+これは$B$が真の際にデータが得られる尤度 \footnote{ある確率モデルを仮定しているときに，その観測データが得られる確率} を表し、尤度関数と呼ばれる。
 $P(A \cap B)$は事象$A$が発生し、事象$B$も発生する確率を表す。
 この式から、事後確率$P(B|A)$は事前確率$P(B)$と尤度$P(A|B)$の積に比例することが分かる。
 
@@ -284,7 +284,7 @@ P(B|A) & = & \frac{B \cap A}{A}
 P(A) \cdot P(B|A) & = & \frac{A}{U} \cdot \frac{A \cap B}{A}\\
                & = & \frac{A \cap B}{U}\\
 P(B) \cdot P(A|B)  & = &\frac{B}{U} \cdot \frac{B \cap A}{B}\\
-                  & = & \frac{B \cap A}{B}
+                  & = & \frac{B \cap A}{U}
 \end{eqnarray*}
 
 つまり、
@@ -576,16 +576,16 @@ Natto の他にも多くのライブラリが Gem 形式でパッケージされ
 Natto を用いることで、Ruby で簡単に MeCab を呼び出すことができる。
 例えば、「今日は学校を休みたい」という文を MeCab を用いて形態素解析するとき、以下のようにプログラムを書く。
 
-\begin{itembox}[l]{プログラムの例}
-require 'natto' \\ \\
+\begin{verbatim}
+require 'natto'
 
-text = '今日は学校を休みたい' \\ \\
+text = '今日は学校を休みたい'
 
-nm = Natto::MeCab.new \\
-nm.parse(text) do |n| \\
-  \verb|puts "#{n.surface} #{n.feature}"| \\
+nm = Natto::MeCab.new
+nm.parse(text) do |n|
+  puts "#{n.surface} #{n.feature}"
 end
-\end{itembox}
+\end{verbatim}
 
 上記のプログラムを実行すると、以下のように表示される。
 
