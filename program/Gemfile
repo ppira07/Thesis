@@ -1,0 +1,8 @@
+source "https://rubygems.org"
+
+gem 'stuff-classifier', github: 'alexandru/stuff-classifier', ref: '23bce7e'
+gem 'natto'
+gem 'twitter'
+gem 'parallel'
+
+gem 'pry'

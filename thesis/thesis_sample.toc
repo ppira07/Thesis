@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}はじめに}{1}
+\contentsline {section}{\numberline {2}先行研究}{2}
+\contentsline {section}{\numberline {3}感情推定における自然言語処理の基礎技術}{3}
+\contentsline {subsection}{\numberline {3.1}Twitter API}{3}
+\contentsline {subsection}{\numberline {3.2}MeCab と Natto}{5}
+\contentsline {section}{\numberline {4}ベイズ推定と感情推定}{7}
+\contentsline {subsection}{\numberline {4.1}ベイズ推定とは}{7}
+\contentsline {subsection}{\numberline {4.2}ナイーブベイズ分類}{9}
+\contentsline {section}{\numberline {5}顔文字自動付与システムの辞書の構築}{11}
+\contentsline {subsection}{\numberline {5.1}感情推定で用いるナイーブベイズ分類}{11}
+\contentsline {subsection}{\numberline {5.2}コーパスを用いた確率付き感情語辞書の構築}{12}
+\contentsline {subsection}{\numberline {5.3}確率付き顔文字辞書の構築}{15}
+\contentsline {section}{\numberline {6}顔文字自動付与システム}{17}
+\contentsline {section}{\numberline {7}顔文字自動付与システムの実験}{19}
+\contentsline {section}{\numberline {8}まとめ}{25}
